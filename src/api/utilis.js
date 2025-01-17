@@ -26,7 +26,7 @@ export const saveUser = async (user) => {
 
     // Make the POST request
     await axios.post(
-      `${import.meta.env.VITE_API_URL}/users/${user?.email}`,
+      `${import.meta.env.VITE_BASE_URL}/users`,
       userData
     );
   } catch (error) {

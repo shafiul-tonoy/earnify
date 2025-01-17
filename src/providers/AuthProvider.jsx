@@ -24,7 +24,7 @@ export default function AuthProvider({ children }) {
   const googleProvider = new GoogleAuthProvider();
 
   // create User
-  const createNewUser = (email, password) => {
+  const createUser = (email, password) => {
     setLoading(true);
     return createUserWithEmailAndPassword(auth, email, password);
   };
@@ -77,7 +77,7 @@ export default function AuthProvider({ children }) {
   }, [axiosPublic]);
 
   const authInfo = {
-    createNewUser,
+    createUser,
     logout,
     login,
     loading,
