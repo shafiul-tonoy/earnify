@@ -1,4 +1,5 @@
 import SiteName from "../components/SiteName";
+import { Link } from "react-router-dom";
 
 export default function NavBar() {
   const navOptions = (
@@ -47,7 +48,17 @@ export default function NavBar() {
         <ul className="menu menu-horizontal px-1">{navOptions}</ul>
       </div>
       <div className="navbar-end">
-        <a className="btn">Button</a>
+        <div className="flex flex-col gap-2 md:flex-row items-center justify-center">
+          <Link to="" className= 'btn btn-outline text-gray-600' >Login</Link>
+          <Link to="" className= 'btn bg-blue-500 text-white'>Register</Link>
+          <a
+            className="btn font-content btn-info  text-white"
+            href="https://github.com/shafiul-tonoy"
+            target="_blank"
+          >
+            Join As Developer
+          </a>
+        </div>
       </div>
     </div>
   );

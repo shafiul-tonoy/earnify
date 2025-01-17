@@ -1,12 +1,17 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useState, useEffect } from "react";
-import auth from "../firebase/firebase.config"
+import auth from "../firebase/firebase.config";
 import {
-    GoogleAuthProvider,
-    signInWithPopup,
-    onAuthStateChanged,
-  } from "firebase/auth";
-  
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut,
+  signInWithEmailAndPassword,
+  updateProfile,
+  signInWithPopup,
+  GoogleAuthProvider,
+} from "firebase/auth";
+
+import useAxiosPublic from "../hooks/useAxiosPublic";
 
 export const AuthContext = createContext();
 
@@ -14,7 +19,21 @@ export default function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  const axiosPublic = useAxiosPublic();
+
   const googleProvider = new GoogleAuthProvider();
+
+  // create User
+  const createNewUser = (email, password) => {
+    setLoading(true);
+    return createUserWithEmailAndPassword(auth, email, password);
+  };
+
+  //login
+  const login = (email, password) => {
+    setLoading(true);
+    return signInWithEmailAndPassword(auth, email, password);
+  };
 
   //login with google
 
@@ -22,23 +41,51 @@ export default function AuthProvider({ children }) {
     return signInWithPopup(auth, googleProvider);
   };
 
+  //logout
+  const logout = () => {
+    setLoading(true);
+    return signOut(auth);
+  };
+
+  //update user profile
+
+  const updateUserProfile = (updatedData) => {
+    return updateProfile(auth.currentUser, updatedData);
+  };
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
-      setLoading(false);
+      if (currentUser) {
+        // get token and store client
+        const userInfo = { email: currentUser.email };
+        axiosPublic.post("/jwt", userInfo).then((res) => {
+          if (res.data.token) {
+            localStorage.setItem("access-token", res.data.token);
+            setLoading(false);
+          }
+        });
+      } else {
+        // TODO: remove token (if token stored in the client side: Local storage, caching, in memory)
+        localStorage.removeItem("access-token");
+        setLoading(false);
+      }
     });
-
-    return () => unsubscribe();
-  }, []);
+    return () => {
+      return unsubscribe();
+    };
+  }, [axiosPublic]);
 
   const authInfo = {
+    createNewUser,
+    logout,
+    login,
+    loading,
+    updateUserProfile,
     user,
     setUser,
-    loading,
     signInWithGoogle,
   };
-
-  
 
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>

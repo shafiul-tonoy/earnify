@@ -3,7 +3,13 @@ import daisyui from "daisyui";
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        heading: ["Montserrat Subrayada", "sans-serif"],
+        subheading: ["Lora", "sans-serif"],
+        content: ["Inter", "sans-serif"],
+      },
+    },
   },
   plugins: [daisyui],
 };
