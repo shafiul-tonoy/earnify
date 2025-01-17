@@ -13,6 +13,8 @@ import {
 
 import useAxiosPublic from "../hooks/useAxiosPublic";
 
+import { successAlert } from "../utilities/sweetalert2"
+
 export const AuthContext = createContext();
 
 export default function AuthProvider({ children }) {
@@ -44,6 +46,7 @@ export default function AuthProvider({ children }) {
   //logout
   const logout = () => {
     setLoading(true);
+    successAlert("You have successfully logged out.")
     return signOut(auth);
   };
 

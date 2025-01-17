@@ -50,7 +50,7 @@ export default function NavBar() {
       <div className="navbar-end">
         <div className="flex flex-col gap-2 md:flex-row items-center justify-center">
           <Link to="" className= 'btn btn-outline text-gray-600' >Login</Link>
-          <Link to="" className= 'btn bg-blue-500 text-white'>Register</Link>
+          <Link to="/register" className= 'btn bg-blue-500 text-white'>Register</Link>
           <a
             className="btn font-content btn-info  text-white"
             href="https://github.com/shafiul-tonoy"
