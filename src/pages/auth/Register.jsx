@@ -31,22 +31,24 @@ export default function Register() {
       role: data.role,
       password: data.password,
     };
-
     try {
-      //2. User firebase Registration
-      await createUser(user.email, user.password);
-
-      //3. Save username & profile photo
-      await updateUserProfile({ displayName: data.name, photoURL: photoURL });
-
-      // save user info in db if the user is new
-      await saveUser(user);
-      successAlert("Your account has been created successfully.");
-      navigate("/");
-    } catch (err) {
-      setError(err.code);
-      errorAlert(err?.message || "Something went wrong!");
-    }
+        // 1. User firebase Registration
+        const userCredential = await createUser(user.email, user.password);
+        // eslint-disable-next-line no-unused-vars
+        const userData = userCredential.user;
+        
+        // 2. Update user profile 
+        await updateUserProfile({ displayName: data.name, photoURL: photoURL });
+    
+        // 3. Save user info in db if the user is new
+        await saveUser(user);
+    
+        successAlert("Your account has been created successfully.");
+        navigate("/"); // Navigate to home page after registration
+      } catch (err) {
+        setError(err.code);
+        errorAlert(err?.message || "Something went wrong!");
+      }
   };
 
   //   google signin

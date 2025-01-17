@@ -1,17 +1,21 @@
 import SiteName from "../components/SiteName";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
 
 export default function NavBar() {
+  const { user, logout } = useAuth();
   const navOptions = (
     <>
-      <li>
-        <a>Item 1</a>
-      </li>
-      <li>
-        <a>Item 3</a>
-      </li>
+      {user && user?.email && (
+        <li>
+          <NavLink to="/">Add Service</NavLink>
+        </li>
+      )}
     </>
   );
+
+  console.log(user);
+  
 
   return (
     <div className="navbar bg-base-100">
@@ -49,8 +53,37 @@ export default function NavBar() {
       </div>
       <div className="navbar-end">
         <div className="flex flex-col gap-2 md:flex-row items-center justify-center">
-          <Link to="" className= 'btn btn-outline text-gray-600' >Login</Link>
-          <Link to="/register" className= 'btn bg-blue-500 text-white'>Register</Link>
+          {user && user?.email ? (
+            <div className="flex items-center gap-1">
+              <div
+                className="tooltip  tooltip-left"
+                data-tip={user.displayName}
+              >
+                <img
+                  src={user.photoURL}
+                  alt="image"
+                  className="w-10 h-10 rounded-full object-cover object-top"
+                ></img>
+              </div>
+
+              <button
+                className="btn btn-ghost text-linksColor"
+                onClick={logout}
+              >
+                Logout
+              </button>
+            </div>
+          ) : (
+            <>
+              <Link to="/login" className="btn btn-outline text-gray-600">
+                Login
+              </Link>
+              <Link to="/register" className="btn bg-blue-500 text-white">
+                Register
+              </Link>
+            </>
+          )}
+
           <a
             className="btn font-content btn-info  text-white"
             href="https://github.com/shafiul-tonoy"
