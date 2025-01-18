@@ -13,7 +13,7 @@ export default function Login() {
   const { login, signInWithGoogle, loading, setUser, user } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location?.state?.from?.pathname || "/";
+  const from = location?.state ? location.state : "/";
   const [error, setError] = useState("");
 
   const {

@@ -18,7 +18,6 @@ export default function NavBar() {
     </>
   );
 
-  console.log(user);
 
   return (
     <div className="navbar bg-base-100 items-center">
