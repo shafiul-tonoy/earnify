@@ -3,6 +3,7 @@ import BasicLayout from "../layouts/BasicLayout";
 import ErrorPage from "../pages/ErrorPase";
 import Register from "../pages/auth/Register";
 import Login from "../pages/auth/Login";
+import DashboardLayout from "../layouts/DashboardLayout";
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,12 @@ const router = createBrowserRouter([
         element: <Login />,
       },
     ],
+  },
+  {
+    path: "dashboard",
+    errorElement: <ErrorPage />,
+    element: <DashboardLayout />,
+    children: [],
   },
 ]);
 

@@ -1,7 +1,7 @@
 export default function SiteName() {
   return (
     <div className="text-center">
-      <h1 className="text-xl md:text-3xl font-extrabold text-blue-600 font-heading">
+      <h1 className="text-xl md:text-3xl lg:text-4xl font-extrabold text-blue-600 font-heading">
         <span className="text-gray-900">E</span>
         <span className="text-blue-500">a</span>
         <span className="text-gray-900">r</span>

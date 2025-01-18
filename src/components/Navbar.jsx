@@ -1,5 +1,5 @@
 import SiteName from "../components/SiteName";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 
 export default function NavBar() {
@@ -7,18 +7,21 @@ export default function NavBar() {
   const navOptions = (
     <>
       {user && user?.email && (
-        <li>
-          <NavLink to="/">Add Service</NavLink>
-        </li>
+        <>
+          <li className="font-subheading  btn  bg-blue-600 text-white hover:bg-blue-700">
+            <div>
+              <Link to="/dashboard">Dashboard</Link>
+            </div>
+          </li>
+        </>
       )}
     </>
   );
 
   console.log(user);
-  
 
   return (
-    <div className="navbar bg-base-100">
+    <div className="navbar bg-base-100 items-center">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -45,25 +48,40 @@ export default function NavBar() {
           </ul>
         </div>
         <a className="btn btn-ghost text-xl">
-          <SiteName />
+          <Link to="/">
+            <SiteName />
+          </Link>
         </a>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">{navOptions}</ul>
       </div>
       <div className="navbar-end">
-        <div className="flex flex-col gap-2 md:flex-row items-center justify-center">
+        <div className="flex flex-col gap-2 lg:gap-4 md:flex-row items-center justify-center">
+          {user && user.email && (
+            <div className="bg-white shadow-md rounded-lg p-2 max-w-sm mx-auto text-center">
+              <h2 className="text-gray-500 text-sm uppercase font-semibold mb-2">
+                Available Balance
+              </h2>
+              <p className="text-sm font-bold text-blue-600">$1,234.56</p>
+            </div>
+          )}
+
           {user && user?.email ? (
             <div className="flex items-center gap-1">
               <div
                 className="tooltip  tooltip-left"
                 data-tip={user.displayName}
               >
-                <img
-                  src={user.photoURL}
-                  alt="image"
-                  className="w-10 h-10 rounded-full object-cover object-top"
-                ></img>
+                <div className="avatar">
+                  <div className="ring-blue-500 ring-offset-base-100 w-14 rounded-full ring ring-offset-2">
+                    <img
+                      src={user.photoURL}
+                      alt="image"
+                      className="w-10 h-10 rounded-full object-cover object-top"
+                    ></img>
+                  </div>
+                </div>
               </div>
 
               <button
