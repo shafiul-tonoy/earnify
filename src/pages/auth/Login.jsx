@@ -7,7 +7,7 @@ import { successAlert, errorAlert } from "../../utilities/sweetalert2";
 import { useState } from "react";
 import CustomTitle from "../../components/CustomTitle";
 import Loading from "../../components/Loading";
-import { saveUser } from "../../api/utilis";
+import { saveUser, checkUser } from "../../api/utilis";
 
 export default function Login() {
   const { login, signInWithGoogle, loading, setUser, user } = useAuth();
@@ -39,16 +39,21 @@ export default function Login() {
     try {
       const result = await signInWithGoogle();
       const user = result.user;
-
-      // Save user info with the role "worker"
-      await saveUser({ ...user, role: "worker" });
-
-      // Set user in state
-      setUser(user);
-
+  
+      // Check if the user already exists in the database
+      const [exists, existingUser] = await checkUser(user.email); // Use await and pass the email
+  
+      if (!exists) {
+        // If user doesn't exist, save the user with the role "worker"
+        await saveUser({ ...user, role: "worker" });
+      }
+  
+      // Set the user in state
+      setUser(existingUser || user);
+  
       // Show success alert
       successAlert("Logged in successfully!");
-
+  
       // Navigate to the appropriate page
       navigate(location?.state || "/");
     } catch (err) {
@@ -56,6 +61,7 @@ export default function Login() {
       setError(err?.message || "An error occurred during Google sign-in.");
     }
   };
+  
 
   if (loading) {
     return <Loading />;
@@ -145,7 +151,7 @@ export default function Login() {
 
           {/* Register Link */}
           <p className="text-center text-gray-600 mt-4">
-            Don't have an account?{" "}
+            Don&apos;t have an account?{" "}
             <a href="/register" className="text-blue-600 hover:underline">
               Register here
             </a>

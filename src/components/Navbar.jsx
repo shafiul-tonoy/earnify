@@ -18,7 +18,6 @@ export default function NavBar() {
     </>
   );
 
-
   return (
     <div className="navbar bg-base-100 items-center">
       <div className="navbar-start">
@@ -46,11 +45,10 @@ export default function NavBar() {
             {navOptions}
           </ul>
         </div>
-        <a className="btn btn-ghost text-xl">
-          <Link to="/">
-            <SiteName />
-          </Link>
-        </a>
+
+        <Link to="/" className="btn btn-ghost text-xl">
+          <SiteName />
+        </Link>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">{navOptions}</ul>

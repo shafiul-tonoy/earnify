@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 
 import { useForm } from "react-hook-form";
-import { imageUpload, saveUser } from "../../api/utilis";
+import { imageUpload, saveUser, checkUser } from "../../api/utilis";
 import useAuth from "../../hooks/useAuth";
 import { successAlert, errorAlert } from "../../utilities/sweetalert2";
 import { useState } from "react";
@@ -57,16 +57,21 @@ export default function Register() {
     try {
       const result = await signInWithGoogle();
       const user = result.user;
-
-      // Save user info with the role "worker"
-      await saveUser({ ...user, role: "worker" });
-
-      // Set user in state
-      setUser(user);
-
+  
+      // Check if the user already exists in the database
+      const [exists, existingUser] = await checkUser(user.email); // Use await and pass the email
+  
+      if (!exists) {
+        // If user doesn't exist, save the user with the role "worker"
+        await saveUser({ ...user, role: "worker" });
+      }
+  
+      // Set the user in state
+      setUser(existingUser || user);
+  
       // Show success alert
       successAlert("Logged in successfully!");
-
+  
       // Navigate to the appropriate page
       navigate(location?.state || "/");
     } catch (err) {
@@ -74,6 +79,7 @@ export default function Register() {
       setError(err?.message || "An error occurred during Google sign-in.");
     }
   };
+  
 
   if (loading) {
     return <Loading />;

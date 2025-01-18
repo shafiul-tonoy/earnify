@@ -25,11 +25,14 @@ export const saveUser = async (user) => {
     };
 
     // Make the POST request
-    await axios.post(
-      `${import.meta.env.VITE_BASE_URL}/users`,
-      userData
-    );
+    await axios.post(`${import.meta.env.VITE_BASE_URL}/users`, userData);
   } catch (error) {
     console.error("Error saving user:", error);
   }
+};
+
+export const checkUser = async (email) => {
+  const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/users/check/${email}`);
+  const { exists, user: existingUser } = response.data;
+  return [exists, existingUser]
 };
