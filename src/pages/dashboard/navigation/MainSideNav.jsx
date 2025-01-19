@@ -1,23 +1,20 @@
-import { Link } from "react-router-dom";
-import { TiHomeOutline } from "react-icons/ti";
 import WorkerNav from "./WorkerNav";
 import BuyerNav from "./BuyerNav";
 import AdminNav from "./AdminNav";
+import useUserInfo from "../../../hooks/useUserInfo";
+import Loading from "../../../components/Loading";
 
 export default function MainSideNav() {
+  const { data: userInfo, isLoading, error } = useUserInfo();
+  if (isLoading) return <Loading />;
+  if (error) return <div>Error: {error.message}</div>;
+  if (!userInfo) return <div>No user found</div>;
+
   return (
     <>
-      <ul className="menu bg-base-200 rounded-box w-56 my-3">
-        <li>
-          <div className="flex gap-2">
-            <TiHomeOutline size="22" />
-            <Link to="/">Home</Link>
-          </div>
-        </li>
-      </ul>
-      <WorkerNav />
-      <BuyerNav />
-      <AdminNav />
+      {userInfo.role === "worker" && <WorkerNav />}
+      {userInfo.role === "buyer" && <BuyerNav />}
+      {userInfo.role === "admin" && <AdminNav />}
     </>
   );
 }
