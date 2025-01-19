@@ -12,7 +12,8 @@ const useBuyerTasks = (email) => {
     queryKey: ["tasks", email], // Unique query key
     queryFn: fetchTasks, // Fetch function
     enabled: !!email, // Only fetch if email is not null or undefined
-    staleTime: 5 * 60 * 1000, // Cache data for 5 minutes
+    staleTime: 0,
+    cacheTime: 0, // Cache data for 5 minutes
     retry: 2, // Retry failed requests up to 2 times
   });
 };

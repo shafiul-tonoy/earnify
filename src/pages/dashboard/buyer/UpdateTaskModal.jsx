@@ -1,10 +1,16 @@
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import axios from "axios";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import {successAlert} from "../../../utilities/sweetalert2"
 
-export default function UpdateTaskModal({ isOpen, onClose, task }) {
-  const { register, handleSubmit, formState: { errors }, reset } = useForm();
+export default function UpdateTaskModal({ isOpen, onClose, task, refetch }) {
+  const axios = useAxiosSecure();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm();
 
   useEffect(() => {
     if (task) {
@@ -16,14 +22,13 @@ export default function UpdateTaskModal({ isOpen, onClose, task }) {
     }
   }, [task, reset]);
 
-  const navigate = useNavigate();
-
   const onSubmit = async (data) => {
     try {
-      const response = await axios.put(`/tasks/${task._id}`, data); // Update API
-      console.log("Task updated:", response.data);
-
-      navigate(0); // Refreshes the current page
+      // eslint-disable-next-line no-unused-vars
+      const response = await axios.patch(`/tasks/${task._id}`, data); 
+      successAlert("Task updated successfully!")      
+      refetch();
+      onClose();
     } catch (error) {
       console.error("Error updating task:", error);
     }
@@ -45,10 +50,14 @@ export default function UpdateTaskModal({ isOpen, onClose, task }) {
               type="text"
               id="task_title"
               className="input input-bordered w-full"
-              {...register("task_title", { required: "Task title is required" })}
+              {...register("task_title", {
+                required: "Task title is required",
+              })}
             />
             {errors.task_title && (
-              <p className="text-red-500 text-sm">{errors.task_title.message}</p>
+              <p className="text-red-500 text-sm">
+                {errors.task_title.message}
+              </p>
             )}
           </div>
 
@@ -59,10 +68,14 @@ export default function UpdateTaskModal({ isOpen, onClose, task }) {
             <textarea
               id="task_detail"
               className="textarea textarea-bordered w-full"
-              {...register("task_detail", { required: "Task details are required" })}
+              {...register("task_detail", {
+                required: "Task details are required",
+              })}
             ></textarea>
             {errors.task_detail && (
-              <p className="text-red-500 text-sm">{errors.task_detail.message}</p>
+              <p className="text-red-500 text-sm">
+                {errors.task_detail.message}
+              </p>
             )}
           </div>
 
@@ -73,10 +86,14 @@ export default function UpdateTaskModal({ isOpen, onClose, task }) {
             <textarea
               id="submission_info"
               className="textarea textarea-bordered w-full"
-              {...register("submission_info", { required: "Submission info is required" })}
+              {...register("submission_info", {
+                required: "Submission info is required",
+              })}
             ></textarea>
             {errors.submission_info && (
-              <p className="text-red-500 text-sm">{errors.submission_info.message}</p>
+              <p className="text-red-500 text-sm">
+                {errors.submission_info.message}
+              </p>
             )}
           </div>
 
