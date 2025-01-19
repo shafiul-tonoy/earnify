@@ -44,7 +44,7 @@ export default function Register() {
         await saveUser(user);
     
         successAlert("Your account has been created successfully.");
-        navigate("/"); // Navigate to home page after registration
+        navigate("/dashboard"); // Navigate to home page after registration
       } catch (err) {
         setError(err.code);
         errorAlert(err?.message || "Something went wrong!");
@@ -73,7 +73,7 @@ export default function Register() {
       successAlert("Logged in successfully!");
   
       // Navigate to the appropriate page
-      navigate(location?.state || "/");
+      navigate(location?.state || "/dashboard");
     } catch (err) {
       // Set error if any occurs during the sign-in process
       setError(err?.message || "An error occurred during Google sign-in.");

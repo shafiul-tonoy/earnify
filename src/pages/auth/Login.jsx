@@ -13,7 +13,7 @@ export default function Login() {
   const { login, signInWithGoogle, loading, setUser, user } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location?.state ? location.state : "/";
+  const from = location?.state ? location.state : "/dashboard";
   const [error, setError] = useState("");
 
   const {
@@ -39,29 +39,28 @@ export default function Login() {
     try {
       const result = await signInWithGoogle();
       const user = result.user;
-  
+
       // Check if the user already exists in the database
       const [exists, existingUser] = await checkUser(user.email); // Use await and pass the email
-  
+
       if (!exists) {
         // If user doesn't exist, save the user with the role "worker"
         await saveUser({ ...user, role: "worker" });
       }
-  
+
       // Set the user in state
       setUser(existingUser || user);
-  
+
       // Show success alert
       successAlert("Logged in successfully!");
-  
+
       // Navigate to the appropriate page
-      navigate(location?.state || "/");
+      navigate(from, { replace: true });
     } catch (err) {
       // Set error if any occurs during the sign-in process
       setError(err?.message || "An error occurred during Google sign-in.");
     }
   };
-  
 
   if (loading) {
     return <Loading />;
