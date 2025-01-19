@@ -1,15 +1,38 @@
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { successAlert, errorAlert } from "../../../utilities/sweetalert2";
+import Loading from "../../../components/Loading";
+import { imageUpload } from "../../../api/utilis";
+import useUserInfo from "../../../hooks/useUserInfo";
 
 export default function AddNewTasks() {
+  const { data: userInfo, isLoading, error, refetch } = useUserInfo();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log("Form Data:", data);
+  const onSubmit = async (data) => {
+    // const image = data.task_image_url[0];
+    // const task_image_url = await imageUpload(image);
+    // data.task_image_url = task_image_url
+    data.buyerId = userInfo._id;
+    const totalPayableAmount =
+      parseFloat(data.payable_amount) * parseFloat(data.required_workers);
+
+    if (totalPayableAmount > userInfo.coin) {
+      errorAlert("notenough coin");
+      return navigate("/dashboard/purchaseCoin");
+    }
+
+    console.log(data);
   };
+
+  if (isLoading) return <Loading />;
+  if (error) return <div>Error: {error.message}</div>;
+  if (!userInfo) return <div>No user found</div>;
 
   return (
     <div className="max-w-2xl mx-auto bg-gray-100 p-6 rounded-lg shadow-md">
@@ -121,6 +144,15 @@ export default function AddNewTasks() {
             className="w-full mt-1 p-2 border border-gray-300 rounded-md"
             {...register("completion_date", {
               required: "Completion date is required",
+              validate: (value) => {
+                const selectedDate = new Date(value);
+                const today = new Date();
+                today.setHours(0, 0, 0, 0); // Ignore time for comparison
+                return (
+                  selectedDate >= today ||
+                  "Completion date cannot be in the past"
+                );
+              },
             })}
           />
           {errors.completion_date && (
@@ -166,7 +198,9 @@ export default function AddNewTasks() {
             id="task_image"
             accept="image/*"
             className="w-full mt-1 p-2 border border-gray-300 rounded-md file:mr-4 file:py-2 file:px-4 file:border-0 file:rounded file:bg-green-300 file:text-blue-700 hover:file:bg-blue-100"
-            {...register("task_image_url", { required: "Task image is required" })}
+            {...register("task_image_url", {
+              required: "Task image is required",
+            })}
           />
           {errors.task_image && (
             <p className="text-sm text-red-500 mt-1">
