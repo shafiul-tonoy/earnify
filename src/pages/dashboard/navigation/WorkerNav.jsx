@@ -17,19 +17,19 @@ export default function WorkerNav() {
         <li>
           <div className="flex gap-2">
             <GoTasklist size="22" />
-            <Link to="/">Task List</Link>
+            <Link to="/dashboard/taskList">Task List</Link>
           </div>
         </li>
         <li>
           <div className="flex gap-2">
             <MdOutlineSendTimeExtension size="22" />
-            <Link to="/">My Submissions</Link>
+            <Link to="/dashboard/mySubmissions">My Submissions</Link>
           </div>
         </li>
         <li>
           <div className="flex gap-2">
             <PiHandWithdrawBold size="22" />
-            <Link to="/">Withdrawals</Link>
+            <Link to="/dashboard/withdrawals">Withdrawals</Link>
           </div>
         </li>
       </ul>

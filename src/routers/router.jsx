@@ -6,10 +6,17 @@ import Login from "../pages/auth/Login";
 import DashboardLayout from "../layouts/DashboardLayout";
 import PrivateRoute from "./PrivateRoute";
 import BuyerRoute from "./BuyerRoute";
+import AdminRoute from "./AdminRoute";
+import WorkerRoute from "./WorkerRoute";
 import DashboardHome from "../pages/dashboard/DashboardHome";
 import AddNewTasks from "../pages/dashboard/buyer/AddNewTasks";
 import MyTasks from "../pages/dashboard/buyer/MyTasks";
 import PurchaseCoin from "../pages/dashboard/buyer/PurchaseCoin";
+import ManageTasks from "../pages/dashboard/admin/ManageTasks";
+import ManageUsers from "../pages/dashboard/admin/ManageUsers";
+import TaskList from "../pages/dashboard/worker/TaskList";
+import MySubmissions from "../pages/dashboard/worker/MySubmissions";
+import Withdrawals from "../pages/dashboard/worker/Withdrawals";
 
 const router = createBrowserRouter([
   {
@@ -62,6 +69,46 @@ const router = createBrowserRouter([
           <BuyerRoute>
             <PurchaseCoin />
           </BuyerRoute>
+        ),
+      },
+      {
+        path: "/dashboard/manageTasks",
+        element: (
+          <AdminRoute>
+            <ManageTasks />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "/dashboard/manageUsers",
+        element: (
+          <AdminRoute>
+            <ManageUsers />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "/dashboard/taskList",
+        element: (
+          <WorkerRoute>
+            <TaskList />
+          </WorkerRoute>
+        ),
+      },
+      {
+        path: "/dashboard/mySubmissions",
+        element: (
+          <WorkerRoute>
+            <MySubmissions />
+          </WorkerRoute>
+        ),
+      },
+      {
+        path: "/dashboard/withdrawals",
+        element: (
+          <WorkerRoute>
+            <Withdrawals />
+          </WorkerRoute>
         ),
       },
     ],

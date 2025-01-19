@@ -16,13 +16,13 @@ export default function AdminNav() {
         <li>
           <div className="flex gap-2">
             <FiUsers size="22" />
-            <Link to="/">Manage Users</Link>
+            <Link to="/dashboard/manageUsers">Manage Users</Link>
           </div>
         </li>
         <li>
           <div className="flex gap-2">
             <GoTasklist size="22" />
-            <Link to="/">Manage Tasks</Link>
+            <Link to="/dashboard/manageTasks">Manage Tasks</Link>
           </div>
         </li>
       </ul>
