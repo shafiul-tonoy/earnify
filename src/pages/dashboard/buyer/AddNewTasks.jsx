@@ -4,9 +4,11 @@ import { successAlert, errorAlert } from "../../../utilities/sweetalert2";
 import Loading from "../../../components/Loading";
 import { imageUpload } from "../../../api/utilis";
 import useUserInfo from "../../../hooks/useUserInfo";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 export default function AddNewTasks() {
   const { data: userInfo, isLoading, error, refetch } = useUserInfo();
+  const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
   const {
     register,
@@ -15,19 +17,33 @@ export default function AddNewTasks() {
   } = useForm();
 
   const onSubmit = async (data) => {
-    // const image = data.task_image_url[0];
-    // const task_image_url = await imageUpload(image);
-    // data.task_image_url = task_image_url
-    data.buyerId = userInfo._id;
+    const image = data.task_image_url[0];
+    const task_image_url = await imageUpload(image);
+    data.task_image_url = task_image_url;
+    data.buyerEmail = userInfo.email;
     const totalPayableAmount =
       parseFloat(data.payable_amount) * parseFloat(data.required_workers);
 
     if (totalPayableAmount > userInfo.coin) {
-      errorAlert("notenough coin");
+      errorAlert("not enough coin");
       return navigate("/dashboard/purchaseCoin");
     }
 
-    console.log(data);
+    data.totalPayableAmount = totalPayableAmount;
+
+    try {
+      const response = await axiosSecure.post("/tasks", data);
+      console.log("Task Created:", response.data);
+      successAlert("Task added successfully!");
+      refetch()
+      return navigate("/dashboard/myTasks");
+    } catch (error) {
+      console.error(
+        "Error creating task:",
+        error.response ? error.response.data : error.message
+      );
+      throw error;
+    }
   };
 
   if (isLoading) return <Loading />;
