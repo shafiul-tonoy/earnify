@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import useAuth from "../hooks/useAuth";
 
+
 const useUserInfo = () => {
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
