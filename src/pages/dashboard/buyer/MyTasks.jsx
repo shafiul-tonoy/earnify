@@ -4,25 +4,33 @@ import useUserInfo from "../../../hooks/useUserInfo";
 import { useState } from "react";
 import UpdateTaskModal from "./UpdateTaskModal.jsx";
 
+import {
+  successAlert,
+  confirmationAlert,
+  errorAlert,
+} from "../../../utilities/sweetalert2";
 
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 export default function MyTasks() {
+  const axiosSecure = useAxiosSecure();
 
-  const [isModalOpen, setModalOpen] = useState(false); 
+  const [isModalOpen, setModalOpen] = useState(false);
   const [selectedTask, setSelectedTask] = useState(null);
 
   const {
     data: userInfo,
     isLoading: userLoading,
     error: userError,
-  } = useUserInfo();    
-  
+    refetch: userRefetch,
+  } = useUserInfo();
+
   const {
     data: tasks,
     isLoading: tasksLoading,
     error: tasksError,
     refetch,
-  } = useBuyerTasks(userInfo?.email); 
+  } = useBuyerTasks(userInfo?.email);
 
   const openModal = (task) => {
     setSelectedTask(task); // Set the selected task
@@ -34,8 +42,31 @@ export default function MyTasks() {
     setModalOpen(false); // Close the modal
   };
 
+  const handleDelete = async (id) => {
+    try {
+      // Show confirmation alert to the user
+      const result = await confirmationAlert();
 
+      // Proceed if the user confirms
+      if (result.isConfirmed) {
+        console.log(id);
 
+        const res = await axiosSecure.delete(`/tasks/${id}`);
+        console.log(res);
+
+        if (res.data.deleteResult.deletedCount > 0) {
+          successAlert("Deleted! Your task has been deleted successfully.");
+          userRefetch()
+          refetch()
+        } else {
+          errorAlert("Failed to delete the task. Please try again.");
+        }
+      }
+    } catch (error) {
+      console.error("Error while deleting task:", error);
+      errorAlert("An error occurred. Unable to delete the task.");
+    }
+  };
 
   if (userLoading || tasksLoading) return <Loading />;
   if (userError)
@@ -58,29 +89,39 @@ export default function MyTasks() {
           </thead>
           <tbody>
             {/* row  */}
-            
-              {tasks.map((task) => (
-                <tr key={task._id}>
-                  <td>{task.task_title}</td>
-                  <td>{task.task_detail}</td>
-                  <td>{task.submission_info}</td>
-                  <td>{task.completion_date}</td>
-                  <td>
-                    <div className="flex gap-1">
-                      <button className="btn bg-green-500 text-white btn-sm" onClick={() => openModal(task)}>
-                        Update
-                      </button>
-                      <button className="btn bg-red-500 text-white btn-sm">
-                        Delete
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            
+
+            {tasks.map((task) => (
+              <tr key={task._id}>
+                <td>{task.task_title}</td>
+                <td>{task.task_detail}</td>
+                <td>{task.submission_info}</td>
+                <td>{task.completion_date}</td>
+                <td>
+                  <div className="flex gap-1">
+                    <button
+                      className="btn bg-green-500 text-white btn-sm"
+                      onClick={() => openModal(task)}
+                    >
+                      Update
+                    </button>
+                    <button
+                      className="btn bg-red-500 text-white btn-sm"
+                      onClick={() => handleDelete(task._id)}
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
-        <UpdateTaskModal isOpen={isModalOpen} onClose={closeModal} task={selectedTask} refetch = {refetch}/>
+        <UpdateTaskModal
+          isOpen={isModalOpen}
+          onClose={closeModal}
+          task={selectedTask}
+          refetch={refetch}
+        />
       </div>
     </>
   );

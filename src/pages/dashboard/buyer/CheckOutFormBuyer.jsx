@@ -5,6 +5,7 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useNavigate } from "react-router-dom";
 import useUserInfo from "../../../hooks/useUserInfo";
 import "./CheckoutForm.css";
+import {successAlert} from "../../../utilities/sweetalert2"
 
 const CheckOutFormBuyer = ({ 
   purchaseInfo, 
@@ -14,6 +15,7 @@ const CheckOutFormBuyer = ({
   const navigate = useNavigate();
   const axiosSecure = useAxiosSecure();
   const [clientSecret, setClientSecret] = useState("");
+  // eslint-disable-next-line no-unused-vars
   const [processing, setProcessing] = useState(false);
   const stripe = useStripe();
   const elements = useElements();
@@ -99,6 +101,7 @@ const CheckOutFormBuyer = ({
         });
   
         refetch();
+        successAlert("Payment completed successfully.")
         navigate("/dashboard");
       } catch (err) {
         console.error("Error saving data or updating coins:", err);
