@@ -18,6 +18,7 @@ import TaskList from "../pages/dashboard/worker/TaskList";
 import MySubmissions from "../pages/dashboard/worker/MySubmissions";
 import Withdrawals from "../pages/dashboard/worker/Withdrawals";
 import PaymentHistory from "../pages/dashboard/buyer/PaymentHistory";
+import TaskDetails from "../pages/dashboard/worker/TaskDEtails";
 
 const router = createBrowserRouter([
   {
@@ -101,6 +102,14 @@ const router = createBrowserRouter([
         element: (
           <WorkerRoute>
             <TaskList />
+          </WorkerRoute>
+        ),
+      },
+      {
+        path: "/dashboard/tasDetails",
+        element: (
+          <WorkerRoute>
+            <TaskDetails />
           </WorkerRoute>
         ),
       },

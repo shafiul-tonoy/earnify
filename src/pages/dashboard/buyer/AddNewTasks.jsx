@@ -30,6 +30,8 @@ export default function AddNewTasks() {
     }
 
     data.totalPayableAmount = totalPayableAmount;
+    data.required_workers = parseFloat(data.required_workers)
+    data.payable_amount = parseFloat(data.payable_amount)
 
     try {
       const response = await axiosSecure.post("/tasks", data);
