@@ -1,7 +1,13 @@
 import { useForm } from "react-hook-form";
+import useAuth from "../../../hooks/useAuth";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { successAlert, errorAlert } from "../../../utilities/sweetalert2" 
+import {useNavigate} from "react-router-dom" 
 
 export default function TaskDetails({ task, onClose }) {
-    
+    const navigate = useNavigate()
+  const axiosSecure = useAxiosSecure();
+  const { user } = useAuth();
   const {
     register,
     handleSubmit,
@@ -9,8 +15,31 @@ export default function TaskDetails({ task, onClose }) {
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log("Submission Details:", data.submission_details);
-    // Add any action after submission, e.g., API call
+    const submission_info = {
+      task_id: task?._id,
+      task_title: task?.task_title,
+      submission_details: data?.submission_details,
+      current_date: new Date().toISOString(),
+      status: "pending",
+      payable_amount: task?.payable_amount,
+      worker_email: user?.email,
+      worker_name: user?.displayName,
+      buyer_email: task.buyerEmail,
+    };
+
+    axiosSecure
+  .post('/submissions', submission_info)
+  .then((response) => {
+    successAlert("success")
+    console.log('Submission successful:', response.data);
+    navigate("/dashboard/mySubmissions")
+  })
+  .catch((error) => {
+    console.error('Error submitting task:', error.response?.data || error.message);    
+    errorAlert("Not successful")
+    navigate("/dashboard/mySubmissions")
+  });
+    
   };
   return (
     <>
