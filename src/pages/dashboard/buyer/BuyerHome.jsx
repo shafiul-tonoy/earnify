@@ -3,6 +3,7 @@ import useBuyerTasks from "../../../hooks/useBuyerTasks";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
+import TaskToReview from "./TaskToReview";
 
 export default function BuyerHome() {
   const { user } = useAuth();
@@ -15,8 +16,8 @@ export default function BuyerHome() {
     queryFn: async () => {
       if (!user?.email) return 0; // Default to 0 if user email is missing
       const response = await axiosSecure.get(`/buyerPayment/${user.email}`);
-      console.log(response);
-      
+ 
+
       return response.data.totalCost;
     },
     initialData: 0, // Set an initial value of 0
@@ -34,28 +35,36 @@ export default function BuyerHome() {
   const totalPayment = totalPaymentData || 0; // Ensure totalPayment defaults to 0
 
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-semibold mb-4">Buyer Dashboard</h1>
+    <>
+      <div className="p-4">
+        <h1 className="text-2xl font-semibold mb-4">Buyer Dashboard</h1>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {/* Total Tasks */}
+          <div className="p-4 bg-blue-100 rounded-md shadow">
+            <h2 className="text-lg font-medium text-blue-600">Total Tasks</h2>
+            <p className="text-3xl font-bold">{totalTasks}</p>
+          </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {/* Total Tasks */}
-        <div className="p-4 bg-blue-100 rounded-md shadow">
-          <h2 className="text-lg font-medium text-blue-600">Total Tasks</h2>
-          <p className="text-3xl font-bold">{totalTasks}</p>
+          {/* Pending Tasks */}
+          <div className="p-4 bg-yellow-100 rounded-md shadow">
+            <h2 className="text-lg font-medium text-yellow-600">
+              Pending Tasks
+            </h2>
+            <p className="text-3xl font-bold">{pendingTaskCount}</p>
+          </div>
+
+          {/* Total Payment Paid */}
+          <div className="p-4 bg-green-100 rounded-md shadow">
+            <h2 className="text-lg font-medium text-green-600">
+              Total Payments
+            </h2>
+            <p className="text-3xl font-bold">${totalPayment.toFixed(2)}</p>
+          </div>
         </div>
 
-        {/* Pending Tasks */}
-        <div className="p-4 bg-yellow-100 rounded-md shadow">
-          <h2 className="text-lg font-medium text-yellow-600">Pending Tasks</h2>
-          <p className="text-3xl font-bold">{pendingTaskCount}</p>
-        </div>
-
-        {/* Total Payment Paid */}
-        <div className="p-4 bg-green-100 rounded-md shadow">
-          <h2 className="text-lg font-medium text-green-600">Total Payments</h2>
-          <p className="text-3xl font-bold">${totalPayment.toFixed(2)}</p>
-        </div>
+        {/* task to review */}
+        <TaskToReview />
       </div>
-    </div>
+    </>
   );
 }
