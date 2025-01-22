@@ -6,22 +6,32 @@ import MainSideNav from "../pages/dashboard/navigation/MainSideNav";
 export default function DashboardLayout() {
   return (
     <>
-      <div className="p-5">
+      {/* Dashboard Navbar */}
+      <div className="p-4 md:p-5 bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 ">
         <DashboardNav />
       </div>
-      <div className="grid grid-col-1 md:grid-cols-4 ">
-        <div className="col-span-1 md:col-span-1  p-10 border-r-2">
+
+      {/* Main Layout */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        {/* Sidebar */}
+        <aside className="col-span-1 bg-gray-100 md:border-r border-gray-300 p-5 md:p-6">
           <MainSideNav />
-        </div>
-        <div className="col-span-1 md:col-span-3 ">
-          <div className= 'min-h-[60vh] p-10' >
+        </aside>
+
+        {/* Main Content */}
+        <main className="col-span-1 md:col-span-3 flex flex-col justify-between">
+          {/* Outlet Content */}
+          <div className="min-h-[65vh] bg-white  rounded-md p-5 md:p-10">
             <Outlet />
           </div>
-          <div id="footer">
+
+          {/* Footer */}
+          <footer className="mt-5 bg-gray-50 text-center p-4 md:p-6  rounded-md">
             <Footer />
-          </div>
-        </div>
+          </footer>
+        </main>
       </div>
     </>
   );
 }
+

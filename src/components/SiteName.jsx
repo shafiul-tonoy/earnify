@@ -1,15 +1,13 @@
 export default function SiteName() {
   return (
     <div className="text-center">
-      <h1 className="text-xl md:text-3xl lg:text-4xl font-extrabold text-blue-600 font-heading">
-        <span className="text-gray-900">E</span>
-        <span className="text-blue-500">a</span>
-        <span className="text-gray-900">r</span>
-        <span className="text-blue-500">n</span>
-        <span className="text-gray-900">i</span>
-        <span className="text-blue-500">f</span>
-        <span className="text-gray-900">y</span>
+      <h1 className="text-2xl md:text-4xl lg:text-5xl font-extrabold font-heading">
+        <span className="bg-gradient-to-r from-gray-900 via-gray-700 to-gray-900 bg-clip-text text-transparent hover:from-gray-700 hover:to-gray-800 transition-colors duration-300">
+          Earnify
+        </span>
       </h1>
     </div>
   );
 }
+
+
