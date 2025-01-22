@@ -10,7 +10,7 @@ export default function AdminNav() {
         <li>
           <div className="flex gap-2">
             <TiHomeOutline size="22" />
-            <Link to="/">Home</Link>
+            <Link to="/dashboard">Home</Link>
           </div>
         </li>
         <li>

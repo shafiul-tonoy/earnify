@@ -16,8 +16,6 @@ export default function BuyerHome() {
     queryFn: async () => {
       if (!user?.email) return 0; // Default to 0 if user email is missing
       const response = await axiosSecure.get(`/buyerPayment/${user.email}`);
- 
-
       return response.data.totalCost;
     },
     initialData: 0, // Set an initial value of 0
@@ -35,36 +33,39 @@ export default function BuyerHome() {
   const totalPayment = totalPaymentData || 0; // Ensure totalPayment defaults to 0
 
   return (
-    <>
-      <div className="p-4">
-        <h1 className="text-2xl font-semibold mb-4">Buyer Dashboard</h1>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {/* Total Tasks */}
-          <div className="p-4 bg-blue-100 rounded-md shadow">
-            <h2 className="text-lg font-medium text-blue-600">Total Tasks</h2>
-            <p className="text-3xl font-bold">{totalTasks}</p>
-          </div>
+    <div className="p-6 bg-gray-50 min-h-screen">
+      <h1 className="text-3xl font-bold mb-6 text-gray-800 text-center">
+        Buyer Dashboard
+      </h1>
 
-          {/* Pending Tasks */}
-          <div className="p-4 bg-yellow-100 rounded-md shadow">
-            <h2 className="text-lg font-medium text-yellow-600">
-              Pending Tasks
-            </h2>
-            <p className="text-3xl font-bold">{pendingTaskCount}</p>
-          </div>
-
-          {/* Total Payment Paid */}
-          <div className="p-4 bg-green-100 rounded-md shadow">
-            <h2 className="text-lg font-medium text-green-600">
-              Total Payments
-            </h2>
-            <p className="text-3xl font-bold">${totalPayment.toFixed(2)}</p>
-          </div>
+      {/* Overview Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* Total Tasks */}
+        <div className="flex flex-col items-center bg-blue-500 text-white rounded-lg shadow-lg p-6">
+          <h2 className="text-lg font-medium uppercase">Total Tasks</h2>
+          <p className="text-4xl font-extrabold mt-2">{totalTasks}</p>
         </div>
 
-        {/* task to review */}
+        {/* Pending Tasks */}
+        <div className="flex flex-col items-center bg-yellow-500 text-white rounded-lg shadow-lg p-6">
+          <h2 className="text-lg font-medium uppercase">Pending Tasks</h2>
+          <p className="text-4xl font-extrabold mt-2">{pendingTaskCount}</p>
+        </div>
+
+        {/* Total Payment Paid */}
+        <div className="flex flex-col items-center bg-green-500 text-white rounded-lg shadow-lg p-6">
+          <h2 className="text-lg font-medium uppercase">Total Payments</h2>
+          <p className="text-4xl font-extrabold mt-2">${totalPayment.toFixed(2)}</p>
+        </div>
+      </div>
+
+      {/* Tasks to Review Section */}
+      <div className="mt-10">
+        <h2 className="text-2xl font-bold text-gray-800 mb-4">
+          Tasks to Review
+        </h2>
         <TaskToReview />
       </div>
-    </>
+    </div>
   );
 }

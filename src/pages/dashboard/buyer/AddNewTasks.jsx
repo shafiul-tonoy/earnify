@@ -53,9 +53,11 @@ export default function AddNewTasks() {
   if (!userInfo) return <div>No user found</div>;
 
   return (
-    <div className="max-w-2xl mx-auto bg-gray-100 p-6 rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold mb-4 text-gray-800">Create a Task</h2>
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+    <div className="max-w-3xl mx-auto bg-white p-8 rounded-lg shadow-lg border border-gray-200">
+      <h2 className="text-3xl font-bold mb-6 text-gray-900 text-center">
+        Create a Task
+      </h2>
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         {/* Task Title */}
         <div>
           <label
@@ -67,16 +69,15 @@ export default function AddNewTasks() {
           <input
             type="text"
             id="task_title"
-            className="w-full mt-1 p-2 border border-gray-300 rounded-md"
+            placeholder="Enter task title"
+            className="w-full mt-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             {...register("task_title", { required: "Task title is required" })}
           />
           {errors.task_title && (
-            <p className="text-sm text-red-500 mt-1">
-              {errors.task_title.message}
-            </p>
+            <p className="text-sm text-red-500 mt-1">{errors.task_title.message}</p>
           )}
         </div>
-
+  
         {/* Task Detail */}
         <div>
           <label
@@ -87,19 +88,16 @@ export default function AddNewTasks() {
           </label>
           <textarea
             id="task_detail"
+            placeholder="Provide details about the task"
             rows="4"
-            className="w-full mt-1 p-2 border border-gray-300 rounded-md"
-            {...register("task_detail", {
-              required: "Task detail is required",
-            })}
+            className="w-full mt-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            {...register("task_detail", { required: "Task detail is required" })}
           />
           {errors.task_detail && (
-            <p className="text-sm text-red-500 mt-1">
-              {errors.task_detail.message}
-            </p>
+            <p className="text-sm text-red-500 mt-1">{errors.task_detail.message}</p>
           )}
         </div>
-
+  
         {/* Required Workers */}
         <div>
           <label
@@ -111,7 +109,8 @@ export default function AddNewTasks() {
           <input
             type="number"
             id="required_workers"
-            className="w-full mt-1 p-2 border border-gray-300 rounded-md"
+            placeholder="Number of workers needed"
+            className="w-full mt-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             {...register("required_workers", {
               required: "Number of workers is required",
               min: { value: 1, message: "Must be at least 1 worker" },
@@ -123,7 +122,7 @@ export default function AddNewTasks() {
             </p>
           )}
         </div>
-
+  
         {/* Payable Amount */}
         <div>
           <label
@@ -135,7 +134,8 @@ export default function AddNewTasks() {
           <input
             type="number"
             id="payable_amount"
-            className="w-full mt-1 p-2 border border-gray-300 rounded-md"
+            placeholder="Enter amount in USD"
+            className="w-full mt-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             {...register("payable_amount", {
               required: "Payable amount is required",
               min: { value: 1, message: "Amount must be greater than 0" },
@@ -147,7 +147,7 @@ export default function AddNewTasks() {
             </p>
           )}
         </div>
-
+  
         {/* Completion Date */}
         <div>
           <label
@@ -159,13 +159,13 @@ export default function AddNewTasks() {
           <input
             type="date"
             id="completion_date"
-            className="w-full mt-1 p-2 border border-gray-300 rounded-md"
+            className="w-full mt-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             {...register("completion_date", {
               required: "Completion date is required",
               validate: (value) => {
                 const selectedDate = new Date(value);
                 const today = new Date();
-                today.setHours(0, 0, 0, 0); // Ignore time for comparison
+                today.setHours(0, 0, 0, 0);
                 return (
                   selectedDate >= today ||
                   "Completion date cannot be in the past"
@@ -179,7 +179,7 @@ export default function AddNewTasks() {
             </p>
           )}
         </div>
-
+  
         {/* Submission Info */}
         <div>
           <label
@@ -190,8 +190,9 @@ export default function AddNewTasks() {
           </label>
           <textarea
             id="submission_info"
+            placeholder="Details for submission"
             rows="2"
-            className="w-full mt-1 p-2 border border-gray-300 rounded-md"
+            className="w-full mt-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             {...register("submission_info", {
               required: "Submission info is required",
             })}
@@ -202,8 +203,8 @@ export default function AddNewTasks() {
             </p>
           )}
         </div>
-
-        {/* Task Image URL */}
+  
+        {/* Task Image Upload */}
         <div>
           <label
             htmlFor="task_image"
@@ -215,23 +216,19 @@ export default function AddNewTasks() {
             type="file"
             id="task_image"
             accept="image/*"
-            className="w-full mt-1 p-2 border border-gray-300 rounded-md file:mr-4 file:py-2 file:px-4 file:border-0 file:rounded file:bg-green-300 file:text-blue-700 hover:file:bg-blue-100"
-            {...register("task_image_url", {
-              required: "Task image is required",
-            })}
+            className="w-full mt-2 p-3 border border-gray-300 rounded-lg file:mr-4 file:py-2 file:px-4 file:border-0 file:rounded-lg file:bg-blue-500 file:text-white hover:file:bg-blue-600"
+            {...register("task_image_url", { required: "Task image is required" })}
           />
           {errors.task_image && (
-            <p className="text-sm text-red-500 mt-1">
-              {errors.task_image.message}
-            </p>
+            <p className="text-sm text-red-500 mt-1">{errors.task_image.message}</p>
           )}
         </div>
-
+  
         {/* Submit Button */}
         <div>
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
+            className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
           >
             Add Task
           </button>
@@ -239,4 +236,5 @@ export default function AddNewTasks() {
       </form>
     </div>
   );
+  
 }

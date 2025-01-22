@@ -29,7 +29,10 @@ export default function ManageTasks() {
           errorAlert("Failed to delete task.");
         }
       } catch (err) {
-        errorAlert("Error deleting task:", err.response?.data?.message || err.message);
+        errorAlert(
+          "Error deleting task:",
+          err.response?.data?.message || err.message
+        );
       }
     }
   };
@@ -39,34 +42,46 @@ export default function ManageTasks() {
   if (!allTasks?.length) return <div>No tasks found</div>;
 
   return (
-    <>
-      <h1 className="text-2xl font-bold mb-4">Manage Tasks</h1>
+    <div className="p-6">
+      <div className="divider mb-6">
+        <h1 className="text-3xl font-bold text-gray-800">Manage Tasks</h1>
+      </div>
 
-      <div className="overflow-x-auto">
-        <table className="table w-full">
+      <div className="overflow-x-auto rounded-lg shadow-md">
+        <table className="table-auto w-full text-left border border-gray-200">
           {/* Table Head */}
-          <thead>
+          <thead className="bg-gray-100 text-gray-700">
             <tr>
-              <th>#</th>
-              <th>Title</th>
-              <th>Required Workers</th>
-              <th>Payable Amount</th>
-              <th>Buyer</th>
-              <th>Action</th>
+              <th className="px-6 py-3">#</th>
+              <th className="px-6 py-3">Title</th>
+              <th className="px-6 py-3">Required Workers</th>
+              <th className="px-6 py-3">Payable Amount</th>
+              <th className="px-6 py-3">Buyer</th>
+              <th className="px-6 py-3">Action</th>
             </tr>
           </thead>
+          {/* Table Body */}
           <tbody>
             {allTasks.map((task, index) => (
-              <tr key={task._id}>
-                <th>{index + 1}</th>
-                <td>{task.task_title}</td>
-                <td>{task.required_workers}</td>
-                <td>${task.payable_amount}</td>
-                <td>{task.buyerEmail}</td>
-                <td>
+              <tr
+                key={task._id}
+                className="border-b border-gray-200 hover:bg-gray-50"
+              >
+                <td className="px-6 py-4 text-gray-800 font-medium">
+                  {index + 1}
+                </td>
+                <td className="px-6 py-4 text-gray-800">{task.task_title}</td>
+                <td className="px-6 py-4 text-gray-800">
+                  {task.required_workers}
+                </td>
+                <td className="px-6 py-4 text-gray-800">
+                  ${task.payable_amount}
+                </td>
+                <td className="px-6 py-4 text-gray-800">{task.buyerEmail}</td>
+                <td className="px-6 py-4">
                   <button
                     onClick={() => handleDeleteTask(task._id)}
-                    className="btn btn-sm btn-error"
+                    className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition duration-200"
                   >
                     Delete
                   </button>
@@ -76,6 +91,6 @@ export default function ManageTasks() {
           </tbody>
         </table>
       </div>
-    </>
+    </div>
   );
 }

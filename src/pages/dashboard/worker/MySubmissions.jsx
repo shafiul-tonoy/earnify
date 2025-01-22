@@ -45,65 +45,60 @@ export default function MySubmissions() {
 
   return (
     <div>
-      <h3 className="font-subheading text-lg font-bold">My Submissions</h3>
-      <div className="overflow-x-auto">
-        <table className="table w-full">
-          {/* Head */}
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>Submission Detail</th>
-              <th>Payable Amount</th>
-              <th>Status</th>
-              <th>Buyer</th>
-            </tr>
-          </thead>
-          <tbody>
-            {currentSubmissions.map((submission) => (
-              <tr key={submission._id}>
-                <td>{submission.task_title}</td>
-                <td>{submission.submission_details}</td>
-                <td>{submission.payable_amount}</td>
-                <td
-                  style={{
-                    color:
-                      submission.status === "approved"
-                        ? "green"
-                        : submission.status === "pending"
-                        ? "orange"
-                        : "red",
-                    fontWeight: "bold",
-                  }}
-                >
-                  {submission.status}
-                </td>
-                <td>{submission.buyer_name}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-      
-      {/* Pagination */}
-      <div className="flex justify-between items-center mt-4">
-        <button
-          onClick={() => handlePageChange(currentPage - 1)}
-          disabled={currentPage === 1}
-          className="btn btn-sm btn-outline"
-        >
-          Previous
-        </button>
-        <p>
-          Page {currentPage} of {totalPages}
-        </p>
-        <button
-          onClick={() => handlePageChange(currentPage + 1)}
-          disabled={currentPage === totalPages}
-          className="btn btn-sm btn-outline"
-        >
-          Next
-        </button>
-      </div>
-    </div>
+  <h3 className="font-subheading text-2xl font-extrabold text-gray-800 mb-4">My Submissions</h3>
+  <div className="overflow-x-auto bg-white shadow-md rounded-lg border border-gray-200">
+    <table className="table-auto w-full text-left border-collapse">
+      {/* Table Head */}
+      <thead className="bg-gray-100 text-gray-700 text-sm uppercase">
+        <tr>
+          <th className="px-4 py-3">Title</th>
+          <th className="px-4 py-3">Submission Detail</th>
+          <th className="px-4 py-3">Payable Amount</th>
+          <th className="px-4 py-3">Status</th>
+          <th className="px-4 py-3">Buyer</th>
+        </tr>
+      </thead>
+      <tbody>
+        {currentSubmissions.map((submission) => (
+          <tr key={submission._id} className="border-t hover:bg-gray-50">
+            <td className="px-4 py-3 text-gray-800">{submission.task_title}</td>
+            <td className="px-4 py-3 text-gray-600 truncate max-w-xs">{submission.submission_details}</td>
+            <td className="px-4 py-3 text-gray-800">${submission.payable_amount}</td>
+            <td
+              className={`px-4 py-3 font-bold ${
+                submission.status === "approved" ? "text-green-600" : submission.status === "pending" ? "text-orange-600" : "text-red-600"
+              }`}
+            >
+              {submission.status}
+            </td>
+            <td className="px-4 py-3 text-gray-800">{submission.buyer_name}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  {/* Pagination */}
+  <div className="flex justify-between items-center mt-6">
+    <button
+      onClick={() => handlePageChange(currentPage - 1)}
+      disabled={currentPage === 1}
+      className="px-4 py-2 bg-gray-100 text-gray-600 rounded-md shadow-sm hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed"
+    >
+      Previous
+    </button>
+    <p className="text-gray-700 font-medium">
+      Page {currentPage} of {totalPages}
+    </p>
+    <button
+      onClick={() => handlePageChange(currentPage + 1)}
+      disabled={currentPage === totalPages}
+      className="px-4 py-2 bg-gray-100 text-gray-600 rounded-md shadow-sm hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed"
+    >
+      Next
+    </button>
+  </div>
+</div>
+
   );
 }

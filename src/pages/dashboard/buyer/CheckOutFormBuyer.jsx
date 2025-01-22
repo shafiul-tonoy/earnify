@@ -135,7 +135,7 @@ const CheckOutFormBuyer = ({
         }}
       />
       <div className="flex justify-around mt-2 gap-2">
-        <button className="btn"> {`Pay ${purchaseInfo?.cost}$`}</button>        
+        <button className="btn bg-green-800 text-white"> {`Pay ${purchaseInfo?.cost}$`}</button>        
       </div>
     </form>
   );

@@ -24,27 +24,36 @@ export default function PurchaseCoin() {
 
   return (
     <>
-      <div className="container mx-auto p-4">
-        <h2 className="text-xl font-bold mb-4">Purchase Coins</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <div className="container mx-auto p-6">
+        {/* Title */}
+        <h2 className="text-2xl md:text-3xl font-extrabold text-gray-800 text-center mb-6">
+          Purchase Coins
+        </h2>
+
+        {/* Card Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {cardData.map((card, index) => (
-            <div key={index} className="card bg-gray-700 text-neutral-content">
-              <div className="card-body items-center text-center">
-                <h2 className="card-title text-2xl">{card.coins} Coins</h2>
-                <p>=</p>
-                <p className="text-xl">{card.cost} $</p>
-                <div className="card-actions justify-end">
-                  <button
-                    className="btn btn-primary"
-                    onClick={() => openModal(card)} // Pass card info to modal
-                  >
-                    Accept
-                  </button>
-                </div>
+            <div
+              key={index}
+              className="card rounded-lg shadow-lg bg-gradient-to-b from-blue-500 via-blue-600 to-blue-700 text-white p-6 transition-transform transform hover:scale-105"
+            >
+              <div className="card-body flex flex-col items-center text-center">
+                {/* Coins */}
+                <h2 className="text-4xl font-extrabold mb-2">{card.coins} Coins</h2>
+                <p className="text-xl font-semibold mb-4">= {card.cost} $</p>
+                {/* Button */}
+                <button
+                  className="px-4 py-2 rounded-md bg-white text-blue-600 font-bold hover:bg-blue-100 transition-colors duration-300"
+                  onClick={() => openModal(card)}
+                >
+                  Purchase
+                </button>
               </div>
             </div>
           ))}
         </div>
+
+        {/* Purchase Modal */}
         <PurchaseModal isOpen={isModalOpen} onClose={closeModal} info={selectedInfo} />
       </div>
     </>
