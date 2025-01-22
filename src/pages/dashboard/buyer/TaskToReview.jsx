@@ -35,6 +35,30 @@ export default function TaskToReview() {
       );
       if (response.data.modifiedCount > 0) {
         successAlert("Submission approved successfully!");
+        // for notification start
+
+        // Create a notification
+        const notification = {
+          message: `“ you have earned ${submission.payable_amount} from ${submission.buyer_name} for completing ${submission.task_title}`,
+          toEmail: submission?.buyerEmail,
+          fromEmail: user?.email,
+          actionRoute: `/dashboard/mySubmissions`,
+          time: new Date().toISOString(),
+        };
+
+        // Send the notification
+        axiosSecure
+          .post("/notifications", notification)
+          .then(() => {
+            console.log("Notification sent successfully");
+          })
+          .catch((error) => {
+            console.error(
+              "Error sending notification:",
+              error.response?.data || error.message
+            );
+          });
+        // for notification end
         refetch();
       }
     } catch (err) {
@@ -51,6 +75,30 @@ export default function TaskToReview() {
       );
       if (response.data.modifiedCount > 0) {
         successAlert("Submission rejected successfully!");
+        // for notification start
+
+        // Create a notification
+        const notification = {
+          message: `“ ${submission.task_title} rejected`,
+          toEmail: submission?.buyerEmail,
+          fromEmail: user?.email,
+          actionRoute: `/dashboard/mySubmissions`,
+          time: new Date().toISOString(),
+        };
+
+        // Send the notification
+        axiosSecure
+          .post("/notifications", notification)
+          .then(() => {
+            console.log("Notification sent successfully");
+          })
+          .catch((error) => {
+            console.error(
+              "Error sending notification:",
+              error.response?.data || error.message
+            );
+          });
+        // for notification end
         refetch();
       }
     } catch (err) {

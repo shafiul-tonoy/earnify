@@ -1,11 +1,11 @@
 import { useForm } from "react-hook-form";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
-import { successAlert, errorAlert } from "../../../utilities/sweetalert2" 
-import {useNavigate} from "react-router-dom" 
+import { successAlert, errorAlert } from "../../../utilities/sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 export default function TaskDetails({ task, onClose }) {
-    const navigate = useNavigate()
+  const navigate = useNavigate();
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
   const {
@@ -28,18 +28,43 @@ export default function TaskDetails({ task, onClose }) {
     };
 
     axiosSecure
-  .post('/submissions', submission_info)
-  .then((response) => {
-    successAlert("success")
-    console.log('Submission successful:', response.data);
-    navigate("/dashboard/mySubmissions")
-  })
-  .catch((error) => {
-    console.error('Error submitting task:', error.response?.data || error.message);    
-    errorAlert("Not successful")
-    navigate("/dashboard/mySubmissions")
-  });
-    
+      .post("/submissions", submission_info)
+      .then((response) => {
+        successAlert("success");
+        console.log("Submission successful:", response.data);
+
+        // Create a notification
+      const notification = {
+        message: `${user?.email} have submitted the task "${task?.task_title}.`,
+        toEmail: task?.buyerEmail,
+        fromEmail: user?.email,
+        actionRoute: `/dashboard/mySubmissions`,
+        time: new Date().toISOString(),
+      };
+
+      // Send the notification
+      axiosSecure
+        .post("/notifications", notification)
+        .then(() => {
+          console.log("Notification sent successfully");
+        })
+        .catch((error) => {
+          console.error(
+            "Error sending notification:",
+            error.response?.data || error.message
+          );
+        });
+
+        navigate("/dashboard/mySubmissions");
+      })
+      .catch((error) => {
+        console.error(
+          "Error submitting task:",
+          error.response?.data || error.message
+        );
+        errorAlert("Not successful");
+        navigate("/dashboard/mySubmissions");
+      });
   };
   return (
     <>
