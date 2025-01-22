@@ -45,14 +45,45 @@ export default function AdminHome() {
   );
   const totalCost = totalCostData || 0;
 
-  const handlePaymentSuccess = async (id) => {
+  const handlePaymentSuccess = async (withdraw) => {
     try {
-      const response = await axiosSecure.patch(`/allWithdraws/${id}`, {
+      const response = await axiosSecure.patch(`/allWithdraws/${withdraw._id}`, {
         status: "approved",
       });
 
+      console.log(response.data);
+      
+
       if (response.data.modifiedCount > 0) {
         successAlert("Payment status updated successfully");
+        console.log("Payment status updated successfully");
+        
+
+      // for notification start
+
+        // Create a notification
+        const notification = {
+          message: `you have earned ${withdraw.withdrawal_amount} Dollar`,
+          toEmail: withdraw?.worker_email,
+          fromEmail:"Admin",
+          actionRoute: `/dashboard/`,
+          time: new Date().toISOString(),
+        };
+
+        // Send the notification
+        axiosSecure
+          .post("/notifications", notification)
+          .then(() => {
+            console.log("Notification sent successfully");
+          })
+          .catch((error) => {
+            console.error(
+              "Error sending notification:",
+              error.response?.data || error.message
+            );
+          });
+        // for notification end        
+
         refetch(); // Refresh the data
       } else {
         errorAlert("Failed to update payment status");
@@ -143,7 +174,7 @@ export default function AdminHome() {
                       <td>
                         {withdraw.status === "Pending" && (
                           <button
-                            onClick={() => handlePaymentSuccess(withdraw._id)}
+                            onClick={() => handlePaymentSuccess(withdraw)}
                             className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition duration-200"
                           >
                             Payment Success
