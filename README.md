@@ -12,7 +12,7 @@ Earnify is a Micro Tasking and Earning Platform designed to provide users with o
 - **Password:** ph@123
 
 ## Live Site URL
-[https://www.earnify.com](https://www.earnify.com)
+[https://shafiul-a12.web.app/](https://shafiul-a12.web.app/)
 
 ## Features
 - **Task Management** for both Workers and Buyers to create, submit, and approve tasks.
