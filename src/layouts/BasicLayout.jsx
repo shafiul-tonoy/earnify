@@ -13,9 +13,9 @@ export default function BasicLayout() {
         </Container>
       </header>
       <main className="font-content min-h-[calc(100vh-300px)]">
-        <Container>
+        
           <Outlet />
-        </Container>
+        
       </main>
       <footer className="bg-base-200">
         <Container>

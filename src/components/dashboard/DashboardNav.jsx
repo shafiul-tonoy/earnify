@@ -5,6 +5,7 @@ import Loading from "../Loading";
 import CustomTitle from "../CustomTitle";
 import { FaRegBell } from "react-icons/fa";
 import useNotification from "../../hooks/useNotification";
+import { Bell, Info } from 'lucide-react';
 
 export default function DashboardNav() {
   const { data: userInfo, isLoading: userLoading, error: userError } = useUserInfo();
