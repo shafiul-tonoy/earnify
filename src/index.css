@@ -1,5 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Lora:ital,wght@0,400..700;1,400..700&family=Montserrat+Subrayada:wght@400;700&display=swap');
+html,
+body {
+  overflow-x: hidden;
+}
 
+.Container {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Lora:ital,wght@0,400..700;1,400..700&family=Montserrat+Subrayada:wght@400;700&display=swap");
 
 @tailwind base;
 @tailwind components;
