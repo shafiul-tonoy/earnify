@@ -64,3 +64,37 @@ Ensure you have the following installed:
 ```sh
 git clone https://github.com/shafiul-tonoy/earnify.git
 cd earnify
+
+### Install Dependencies
+```sh
+npm install
+
+### 🔹 Set Up Environment Variables
+Create a .env file and configure:
+
+```sh
+DATABASE_URI=your_mongo_db_uri
+API_KEY=your_api_key
+
+### 🔹 Run the Development Server
+```sh
+npm run dev
+
+## 📌 Usage
+-👤 Workers: View and complete tasks to earn coins.
+-💼 Buyers: Create, review, and approve tasks; purchase coins for payments.
+-🛠 Admins: Monitor activity, resolve reports, and manage user roles.
+
+## ❓ Troubleshooting
+-🔹 Login Issues – Clear cache or reset your password.
+-🔹 Payment Delays – Check transaction history and ensure sufficient balance.
+
+
+## 👥 Contributors
+MD. Shafiul Anam	
+Developer
+
+ 🚀 Open to contributions! Feel free to fork and submit a pull request.
+
+## 📜 License
+This project is licensed under the MIT License.
