@@ -64,10 +64,12 @@ Ensure you have the following installed:
 ```sh
 git clone https://github.com/shafiul-tonoy/earnify.git
 cd earnify
+```
 
 ### Install Dependencies
 ```sh
 npm install
+```
 
 ### 🔹 Set Up Environment Variables
 Create a .env file and configure:
@@ -75,10 +77,12 @@ Create a .env file and configure:
 ```sh
 DATABASE_URI=your_mongo_db_uri
 API_KEY=your_api_key
+```
 
 ### 🔹 Run the Development Server
 ```sh
 npm run dev
+```
 
 ## 📌 Usage
 -👤 Workers: View and complete tasks to earn coins.
@@ -91,8 +95,11 @@ npm run dev
 
 
 ## 👥 Contributors
-MD. Shafiul Anam	
-Developer
+
+| Name             | Role      |
+|------------------|-----------|
+| MD. Shafiul Anam | Developer |
+
 
  🚀 Open to contributions! Feel free to fork and submit a pull request.
 
