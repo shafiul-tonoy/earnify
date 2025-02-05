@@ -7,9 +7,9 @@ Earnify is a Micro Tasking and Earning Platform designed to provide users with o
 - **Buyer:** Manages tasks and payments by creating tasks, reviewing submissions, paying Workers, purchasing coins, and reporting issues.
 - **Admin:** Oversees platform operations by managing user roles, addressing reports, and maintaining system integrity.
 
-## Admin Credentials
-- **Username:** admin1@gmail.com
-- **Password:** ph@123
+<!-- ## Admin Credentials -->
+<!-- - **Username:** admin1@gmail.com
+- **Password:** ph@123 -->
 
 ## Live Site URL
 [https://shafiul-a12.web.app/](https://shafiul-a12.web.app/)
