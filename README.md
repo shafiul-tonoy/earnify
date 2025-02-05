@@ -85,13 +85,13 @@ npm run dev
 ```
 
 ## 📌 Usage
--👤 Workers: View and complete tasks to earn coins.
--💼 Buyers: Create, review, and approve tasks; purchase coins for payments.
--🛠 Admins: Monitor activity, resolve reports, and manage user roles.
+- 👤 Workers: View and complete tasks to earn coins.
+- 💼 Buyers: Create, review, and approve tasks; purchase coins for payments.
+- 🛠 Admins: Monitor activity, resolve reports, and manage user roles.
 
 ## ❓ Troubleshooting
--🔹 Login Issues – Clear cache or reset your password.
--🔹 Payment Delays – Check transaction history and ensure sufficient balance.
+- 🔹 Login Issues – Clear cache or reset your password.
+- 🔹 Payment Delays – Check transaction history and ensure sufficient balance.
 
 
 ## 👥 Contributors
