@@ -66,23 +66,24 @@ git clone https://github.com/shafiul-tonoy/earnify.git
 cd earnify
 ```
 
-### Install Dependencies
-```sh
+🔹 Install Dependencies
+sh
+Copy
+Edit
 npm install
-```
 
 ### 🔹 Set Up Environment Variables
 Create a .env file and configure:
 
-```sh
+sh
+Copy
+Edit
 DATABASE_URI=your_mongo_db_uri
 API_KEY=your_api_key
-```
 
 ### 🔹 Run the Development Server
 ```sh
 npm run dev
-```
 
 ## 📌 Usage
 -👤 Workers: View and complete tasks to earn coins.
@@ -95,13 +96,13 @@ npm run dev
 
 
 ## 👥 Contributors
-
-| Name             | Role      |
-|------------------|-----------|
-| MD. Shafiul Anam | Developer |
-
+MD. Shafiul Anam	
+Developer
 
  🚀 Open to contributions! Feel free to fork and submit a pull request.
 
-## 📜 License
+📜 License
 This project is licensed under the MIT License.
+
+⭐ Support the Project
+If you like this project, don't forget to star ⭐ the repository!
