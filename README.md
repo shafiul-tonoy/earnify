@@ -51,7 +51,7 @@ Earnify is a **Micro Tasking and Earning Platform** designed to provide users wi
 | **Frontend** | React |
 | **Backend**  | Node.js, Express |
 | **Database** | MongoDB |
-| **Payments** | Stripe / PayPal |
+| **Payments** | Stripe  |
 
 ## ⚙️ Installation & Setup  
 
