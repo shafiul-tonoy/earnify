@@ -16,7 +16,7 @@ export default function Slider() {
     "Deliver Work Make Money" 
   ];
   return (
-    <div className="w-full mx-auto swiper overflow-visible">
+    <div className="w-full mx-auto swiper overflow-visible mt-28">
       <Swiper
         modules={[Navigation, Pagination, Autoplay]}
         spaceBetween={30} // Space between slides

@@ -8,16 +8,14 @@ export default function BasicLayout() {
   return (
     <>
       <header>
-        <Container>
-          <NavBar />
-        </Container>
+        <div className="fixed top-0 left-0 right-0 z-[1000] w-screen bg-white">
+          <Container>
+            <NavBar />
+          </Container>
+        </div>
       </header>
       <main className="font-content min-h-[calc(100vh-300px)]">
-        
-
-          <Outlet />
-        
-        
+        <Outlet />
       </main>
       <footer className="bg-base-200">
         <Container>
