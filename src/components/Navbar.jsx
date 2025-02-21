@@ -1,16 +1,18 @@
-import { useState } from 'react';
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { 
-  Menu, 
-  X, 
-  Home, 
-  LogIn, 
-  UserPlus, 
-  User, 
-  LogOut, 
+import {
+  Menu,
+  X,
+  Home,
+  LogIn,
+  UserPlus,
+  User,
+  LogOut,
   DollarSign,
-  GitMerge 
-} from 'lucide-react';
+  GitMerge,
+  GitBranch,
+  Box,
+} from "lucide-react";
 import SiteName from "../components/SiteName";
 import useAuth from "../hooks/useAuth";
 import useUserInfo from "../hooks/useUserInfo";
@@ -26,9 +28,34 @@ export default function NavBar() {
 
   const NavLinks = () => (
     <>
+      <div className="flex items-center space-x-8">
+        <Link
+          to="/"
+          className="flex items-center gap-2 text-gray-700 hover:text-gray-900 transition-colors"
+        >
+          <Home className="w-5 h-5" />
+          <span className="font-medium">Home</span>
+        </Link>
+
+        <a
+          href="#process"
+          className="flex items-center gap-2 text-gray-700 hover:text-gray-900 transition-colors"
+        >
+          <GitBranch className="w-5 h-5" />
+          <span className="font-medium">Process</span>
+        </a>
+
+        <a
+          href="#features"
+          className="flex items-center gap-2 text-gray-700 hover:text-gray-900 transition-colors"
+        >
+          <Box className="w-5 h-5" />
+          <span className="font-medium">Features</span>
+        </a>
+      </div>
       {user && user.email && (
-        <Link 
-          to="/dashboard" 
+        <Link
+          to="/dashboard"
           className="flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
         >
           <User className="w-5 h-5" />
@@ -56,15 +83,15 @@ export default function NavBar() {
           <div className="flex items-center space-x-2">
             <div className="avatar">
               <div className="w-10 rounded-full ring ring-primary ring-offset-2">
-                <img 
-                  src={user.photoURL} 
-                  alt="User avatar" 
+                <img
+                  src={user.photoURL}
+                  alt="User avatar"
                   className="object-cover"
                 />
               </div>
             </div>
-            
-            <button 
+
+            <button
               onClick={logout}
               className="flex items-center gap-2 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors"
             >
@@ -75,14 +102,14 @@ export default function NavBar() {
         </div>
       ) : (
         <div className="flex items-center space-x-4">
-          <Link 
+          <Link
             to="/login"
             className="flex items-center gap-2 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
           >
             <LogIn className="w-5 h-5" />
             Login
           </Link>
-          <Link 
+          <Link
             to="/register"
             className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
           >
@@ -100,8 +127,8 @@ export default function NavBar() {
         <div className="flex justify-between items-center py-4">
           {/* Logo */}
           <div className="flex items-center">
-            <Link 
-              to="/" 
+            <Link
+              to="/"
               className="flex items-center text-xl font-bold text-gray-800 hover:text-blue-600 transition-colors"
             >
               <SiteName />
@@ -110,7 +137,7 @@ export default function NavBar() {
 
           {/* Mobile Menu Button */}
           <div className="md:hidden">
-            <button 
+            <button
               onClick={toggleMenu}
               className="text-gray-500 hover:text-gray-600 focus:outline-none"
             >
